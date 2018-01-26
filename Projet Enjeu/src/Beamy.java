@@ -14,22 +14,29 @@ public class Beamy
 	private ArrayList<Alarm> alarmCollection;
 	
 	public Beamy() {
+		//Create an ArrayList of Alarm
 		alarmCollection = new ArrayList<Alarm>();
+		//Execute the start method
 		start();
 	}
 	
 	public void start(){
 		
+		//The majority of this method has for purpose to simule the arrival of different messages.
+		//Here the user write what he want to do
 		
 		System.out.println("What do you want to do ? ");
-		boolean validCommand = false;
+		//Will wait for a command until an action stop the loop
+		boolean stopCommand = false;
+		//Configure the buffered reader to catch the user input
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String input="";
 		
-		while(!validCommand) {
+		while(!stopCommand) {
 			System.out.println("waiting order");
 			
 			try {
+				//Catch the input (after an enter)
 				input = br.readLine();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -38,14 +45,17 @@ public class Beamy
 			
 			if (input.equals("newAlarm")) { 
 				System.out.println("newAlarm");
-				this.newAlarm();
+				//Execute the newAlarm() method to create an alarm
+				newAlarm();
 			}
 			else if (input.equals("stop")) {
 				System.out.println("stop");
-				validCommand=true;
+				//Stop the loop
+				stopCommand=true;
 			}
 			
 			else if (input.equals("showAlarms")) {
+				//Show the alarms existing
 				System.out.println(alarmCollection.toString());
 			}
 			else {
@@ -59,6 +69,7 @@ public class Beamy
 	}
 	
 	public void newAlarm() {
+		//Create an alarm
 		Alarm newAlarm = new Alarm();
 		new Thread(newAlarm).start();
 		alarmCollection.add(newAlarm);
