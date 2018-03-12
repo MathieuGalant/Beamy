@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1520855517 source:/home/pi/Desktop/beamy/button/main.c
+	<stdlib.h>
+	<stdio.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+
+1520611411 source:/home/pi/Desktop/beamy/button/test.c
+
