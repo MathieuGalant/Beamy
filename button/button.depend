@@ -1,9 +1,12 @@
 # depslib dependency file v1.0
-1520855517 source:/home/pi/Desktop/beamy/button/main.c
+1520868679 source:/home/pi/Desktop/beamy/button/main.c
+	<time.h>
 	<stdlib.h>
 	<stdio.h>
+	<string.h>
 	<libxml2/libxml/parser.h>
 	<fmod.h>
+	<dirent.h>
 
 1520611411 source:/home/pi/Desktop/beamy/button/test.c
 
