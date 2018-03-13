@@ -5,7 +5,7 @@ typedef int bool;
 #define true 1
 #define false 0
 
-typedef enum {MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY} weekday;
+typedef enum {SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY} weekday;
 
 struct alarm {
     weekday day;

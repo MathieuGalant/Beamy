@@ -32,7 +32,7 @@ void readXmlFile(char *filename,  char * attribut[])
     xmlFreeDoc(doc);
 
     xmlCleanupParser();
-    xmlCleanupParser();
+
 
 }
 
@@ -94,7 +94,7 @@ void modifyXml(char * filename)
 
 
 
-void readAlarmXmlFile(char *filename, struct alarm anAlarm)
+void readAlarmXmlFile(char *filename, struct alarm *anAlarm)
 {
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
@@ -114,14 +114,14 @@ void readAlarmXmlFile(char *filename, struct alarm anAlarm)
     xmlFreeDoc(doc);
 
     xmlCleanupParser();
-    xmlCleanupParser();
 
 }
 
 
-void getAlarmXml(xmlNode * node,int i,  struct alarm anAlarm)
+void getAlarmXml(xmlNode * node,int i,  struct alarm *anAlarm)
 {
-
+    char *ptr;
+    long ret;
 
     while(node)
     {
@@ -132,13 +132,33 @@ void getAlarmXml(xmlNode * node,int i,  struct alarm anAlarm)
           {
             switch(i)
             {
-         //       case 0: anAlarm.day=xmlNodeGetContent(node);
-                case 1: anAlarm.hour=xmlNodeGetContent(node);
-                case 2: anAlarm.min=xmlNodeGetContent(node);
-                case 3: strcpy(anAlarm.musicName,xmlNodeGetContent(node));
-                case 4: anAlarm.state=xmlNodeGetContent(node);
-                case 5: anAlarm.delay=xmlNodeGetContent(node);
-                case 6: strcpy(anAlarm.path,xmlNodeGetContent(node));
+                case 0:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                anAlarm->day=ret;
+                }
+                case 1:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                anAlarm->hour=ret;
+                }
+                case 2:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                anAlarm->min=ret;
+                }
+                case 3: strcpy(anAlarm->musicName,xmlNodeGetContent(node));
+                case 4:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                anAlarm->state=ret;
+                }
+                case 5:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                anAlarm->delay=ret;
+                }
+                case 6: strcpy(anAlarm->path,xmlNodeGetContent(node));
 
             }
 

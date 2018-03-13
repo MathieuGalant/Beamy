@@ -1,6 +1,4 @@
 #include <time.h>
-
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,6 +8,7 @@
 #include "xml.h"
 #include "command.h"
 #include "alarm.h"
+#include "definition.h"
 
 void getFolderFiles(char *foldername,char *musicName[]);
 
@@ -30,10 +29,16 @@ int main(int argc, char **argv)
     int continuer=1;
 
 
-    struct alarm alarm_default = {MONDAY,7,0,"Kalimba.mp3",false,0,alarmFolder};
+    struct alarm alarm_default = {SUNDAY,7,10,"Kalimba.mp3",false,5,alarmFolder};
     struct alarm alarmCollection[5];
-    struct alarm alarmTest;
+    struct alarm anAlarm;
 
+
+    struct tm * timeinfo;
+    timeinfo=getTime();
+    printf("%d\n",timeinfo->tm_wday);
+    printf("%d\n",timeinfo->tm_hour);
+    printf("%d\n",timeinfo->tm_min);
 
     for (int i = 0;i<5;i++ )
     {
@@ -41,13 +46,13 @@ int main(int argc, char **argv)
     }
 
   //  displayAlarms(alarm_default,1);
-    displayAnAlarm(alarm_default);
+    displayAnAlarm(&alarm_default);
 
 
 
-    readAlarmXmlFile(alarmFile,alarmTest);
+    readAlarmXmlFile(alarmFile, &anAlarm);
 
-    displayAnAlarm(alarmTest);
+    displayAnAlarm(&anAlarm);
 
 
 
@@ -86,7 +91,7 @@ int main(int argc, char **argv)
 
 
     int action=0;
-
+    int onetime=0;
     while (continuer)
     {
         readXmlFile(commandFile,command);
@@ -94,6 +99,28 @@ int main(int argc, char **argv)
 
         action=returnAction(command);
 
+        timeinfo=getTime();
+     //   printf("%d\n",timeinfo->tm_wday);
+      //  printf("%d\n",timeinfo->tm_hour);
+       // printf("%d\n",timeinfo->tm_min);
+
+        if (timeinfo->tm_wday==anAlarm.day && timeinfo->tm_hour==anAlarm.hour && timeinfo->tm_min==anAlarm.min && onetime==0)
+        {
+                FMOD_Sound_Release(music);
+                sprintf(musicPlaying,"%s/%s",musicFolder,anAlarm.musicName);
+                printf("%s\n",musicPlaying);
+                resultat=FMOD_System_CreateStream(system, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
+
+                if (resultat != FMOD_OK)
+                {
+                fprintf(stderr, "Cannot read the mp3 file\n");
+                exit(EXIT_FAILURE);
+                }
+
+                FMOD_Channel_SetVolume(channel, volume);
+                FMOD_System_PlaySound(system,  music, 0, 0, &channel);
+                onetime=1;
+        }
 
 
         switch(action)

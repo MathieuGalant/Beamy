@@ -7,7 +7,7 @@ int is_leaf(xmlNode * node);
 
 void modifyXml(char * filename);
 
-void readAlarmXmlFile(char *filename, struct alarm anAlarm);
-void getAlarmXml(xmlNode * node,int i,  struct alarm anAlarm);
+void readAlarmXmlFile(char *filename, struct alarm *anAlarm);
+void getAlarmXml(xmlNode * node,int i,  struct alarm *anAlarm);
 
 #endif // XML_H_INCLUDED

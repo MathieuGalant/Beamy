@@ -22,7 +22,7 @@ void displayAlarms(struct alarm alarmCollection[],int numberOfAlarm)
                 printf("Day : %d \n",alarmCollection[i].day);
                 printf("Hour : %d \n",alarmCollection[i].hour);
                 printf("Minutes : %d \n",alarmCollection[i].min);
-                printf("Music name : %d \n",alarmCollection[i].musicName);
+                printf("Music name : %s \n",alarmCollection[i].musicName);
                 printf("State : %d \n",alarmCollection[i].state);
                 printf("Delay : %d \n",alarmCollection[i].delay);
                 printf("Path : %s \n \n",alarmCollection[i].path);
@@ -30,16 +30,16 @@ void displayAlarms(struct alarm alarmCollection[],int numberOfAlarm)
     }
 
 }
-void displayAnAlarm(struct alarm anAlarm)
+void displayAnAlarm(struct alarm *anAlarm)
  {
 
-    printf("Day : %d \n",anAlarm.day);
-    printf("Hour : %d \n",anAlarm.hour);
-    printf("Minutes : %d \n",anAlarm.min);
-    printf("Music name : %d \n",anAlarm.musicName);
-    printf("State : %d \n",anAlarm.state);
-    printf("Delay : %d \n",anAlarm.min);
-    printf("Path : %s \n \n",anAlarm.path);
+    printf("Day : %d \n",anAlarm->day);
+    printf("Hour : %d \n",anAlarm->hour);
+    printf("Minutes : %d \n",anAlarm->min);
+    printf("Music name : %s \n",anAlarm->musicName);
+    printf("State : %d \n",anAlarm->state);
+    printf("Delay : %d \n",anAlarm->delay);
+    printf("Path : %s \n \n",anAlarm->path);
 
 
  }
@@ -106,4 +106,22 @@ void setPath(struct alarm anAlarm, char path[])
 
     strcpy(anAlarm.path,path);
 
+}
+
+struct tm * getTime ()
+{
+  time_t rawtime;
+  struct tm * timeinfo;
+
+  time ( &rawtime );
+  timeinfo = localtime ( &rawtime );
+ // printf ( "The current date/time is: %s", asctime (timeinfo) );
+
+  return timeinfo;
+}
+
+void delay(unsigned int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <alarm>
 	<day>2</day>
-	<hour>3</hour>
-	<minute>20</minute>
+	<hour>17</hour>
+	<minute>18</minute>
 	<musicName>Kalimba.mp3</musicName>
 	<state>0</state>
 	<delay>5</delay>
-	<path>alar</path>
+	<path>alarm</path>
 </alarm>
