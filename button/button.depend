@@ -1,5 +1,19 @@
 # depslib dependency file v1.0
-1520868679 source:/home/pi/Desktop/beamy/button/main.c
+1520946702 source:/home/pi/Desktop/beamy/button/main.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"xml.h"
+	"command.h"
+	"alarm.h"
+
+1520611411 source:/home/pi/Desktop/beamy/button/test.c
+
+1520932503 source:/home/pi/Desktop/beamy/button/command.c
 	<time.h>
 	<stdlib.h>
 	<stdio.h>
@@ -8,5 +22,29 @@
 	<fmod.h>
 	<dirent.h>
 
-1520611411 source:/home/pi/Desktop/beamy/button/test.c
+1520944218 /home/pi/Desktop/beamy/button/xml.h
+
+1520932582 /home/pi/Desktop/beamy/button/command.h
+
+1520946300 source:/home/pi/Desktop/beamy/button/xml.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"definition.h"
+
+1520946478 /home/pi/Desktop/beamy/button/alarm.h
+	"definition.h"
+
+1520935333 /home/pi/Desktop/beamy/button/definition.h
+
+1520947122 source:/home/pi/Desktop/beamy/button/alarm.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"definition.h"
 

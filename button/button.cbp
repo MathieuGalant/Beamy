@@ -41,9 +41,22 @@
 			<Add option="-lxml2" />
 			<Add library="/home/pi/Desktop/beamy/button/libfmod.so" />
 		</Linker>
+		<Unit filename="alarm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="alarm.h" />
+		<Unit filename="command.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="command.h" />
+		<Unit filename="definition.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="xml.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="xml.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
