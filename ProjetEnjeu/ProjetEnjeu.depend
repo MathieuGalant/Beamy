@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1518612360 source:e:\nosave\projetenjeu\c\projetenjeu\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"Definition.h"
+	"Main.h"
+	"Alarm.h"
+
+1518105446 source:e:\nosave\projetenjeu\c\projetenjeu\beamy.c
+
+1518612960 e:\nosave\projetenjeu\c\projetenjeu\definition.h
+
+1518603523 source:e:\nosave\projetenjeu\c\projetenjeu\alarm.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"Alarm.h"
+	"Definition.h"
+	"Main.h"
+
+1518613031 e:\nosave\projetenjeu\c\projetenjeu\alarm.h
+	"Definition.h"
+
+1518173557 e:\nosave\projetenjeu\c\projetenjeu\main.h
+
