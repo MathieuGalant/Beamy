@@ -15,6 +15,31 @@ int returnAction(char * command[])
 {
     int action;
   //  printf("hello");
+      if (strcmp(command[0], "play music") == 0)
+            {
+                action = 1;
+            }
+
+        else if (strcmp(command[0], "play random music") == 0)
+            {
+                action = 2;
+            }
+
+            else if (strcmp(command[0], "play video") == 0)
+                {
+                    action = 99;
+                }
+
+
+    return action;
+}
+
+
+int returnMusicAction(char * command[])
+
+{
+    int action;
+  //  printf("hello");
       if (strcmp(command[0], "quit") == 0)
             {
                 action = 1;
@@ -30,22 +55,48 @@ int returnAction(char * command[])
                     action = 3;
                 }
 
-                else if (strcmp(command[0], "louder") == 0)
+                else if (strcmp(command[0], "volume up") == 0)
                     {
                         action = 4;
                     }
-                    else if (strcmp(command[0], "quiet") == 0)
+                    else if (strcmp(command[0], "volume down") == 0)
                         {
                             action = 5;
                         }
-                        else if(strcmp(command[0],"play") == 0)
-                            {
-                                action=6;
-                            }
-                            else if(strcmp(command[0],"play random")==0)
-                                {
-                                    action=7;
-                                }
-                                else action=99;
+
+                        else action=99;
+    return action;
+}
+
+int returnVideoAction(char * command[])
+
+{
+    int action;
+  //  printf("hello");
+      if (strcmp(command[0], "quit") == 0)
+            {
+                action = 1;
+            }
+
+        else if (strcmp(command[0], "pause") == 0)
+            {
+                action = 2;
+            }
+
+            else if (strcmp(command[0], "continue") == 0)
+                {
+                    action = 3;
+                }
+
+                else if (strcmp(command[0], "volume down") == 0)
+                    {
+                        action = 4;
+                    }
+                    else if (strcmp(command[0], "volume down") == 0)
+                        {
+                            action = 5;
+                        }
+
+                        else action=99;
     return action;
 }

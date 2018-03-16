@@ -9,6 +9,10 @@
 #include "command.h"
 #include "alarm.h"
 #include "definition.h"
+#include "video.h"
+
+
+
 
 void getFolderFiles(char *foldername,char *musicName[]);
 
@@ -20,30 +24,31 @@ int main(int argc, char **argv)
 
     int musicNumber=20;
     char *musicFolder="media/music";
+    char *videoFolder="media/video";
     char *alarmFolder="alarm";
     char *commandFile= "XML/command.xml";
+    char *commandMusicFile="XML/commandMusic.xml";
+    char *commandAlarmFile="XML/commandAlarm.xml";
     char *alarmFile="XML/alarm.xml";
-    char *musicName[musicNumber];
-    char *command[10];
+    char *musicName[20];
+    char *command[1];
+    char *commandVideo[0];
+    char *commandMusic[0];
     char musicPlaying[100];
     int continuer=1;
 
 
-    struct alarm alarm_default = {SUNDAY,7,10,"Kalimba.mp3",false,5,alarmFolder};
-    struct alarm alarmCollection[5];
+
     struct alarm anAlarm;
 
 
     struct tm * timeinfo;
     timeinfo=getTime();
-    printf("%d\n",timeinfo->tm_wday);
-    printf("%d\n",timeinfo->tm_hour);
-    printf("%d\n",timeinfo->tm_min);
+    //printf("%d\n",timeinfo->tm_wday);
+    //printf("%d\n",timeinfo->tm_hour);
+    //printf("%d\n",timeinfo->tm_min);
 
-    for (int i = 0;i<5;i++ )
-    {
-        alarmCollection[i] = alarm_default;
-    }
+
 
   //  displayAlarms(alarm_default,1);
     displayAnAlarm(&alarm_default);
@@ -58,12 +63,12 @@ int main(int argc, char **argv)
 
 
 
-    getFolderFiles(musicFolder,musicName);
+  //  getFolderFiles(musicFolder,musicName);
   //  printf("%s\n",musicName[0]);
-    sprintf(musicPlaying,"%s/%s",musicFolder,musicName[0]);
+  //  sprintf(musicPlaying,"%s/%s",musicFolder,musicName[0]);
 //    printf("%s\n",musicPlaying);
 
-    FMOD_SYSTEM *system;
+    FMOD_SYSTEM *syst;
     FMOD_CHANNEL *channel = 0;
     FMOD_RESULT resultat;
     void *extradriverdata = 0;
@@ -71,12 +76,12 @@ int main(int argc, char **argv)
 
            /* Create a System object and initialize.*/
 
-    FMOD_System_Create(&system);
-    FMOD_System_Init(system, 32, FMOD_INIT_NORMAL, extradriverdata);
+    FMOD_System_Create(&syst);
+    FMOD_System_Init(syst, 32, FMOD_INIT_NORMAL, extradriverdata);
 
         /* Increase the file buffer size a little bit to account for Internet lag. */
 
-    FMOD_System_SetStreamBufferSize(system,64*1024, FMOD_TIMEUNIT_RAWBYTES);
+    FMOD_System_SetStreamBufferSize(syst,64*1024, FMOD_TIMEUNIT_RAWBYTES);
 
     memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
     exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
@@ -91,7 +96,13 @@ int main(int argc, char **argv)
 
 
     int action=0;
+    int actionMusic=0;
+    int actionVideo=0;
+    int actionAlarm=0
     int onetime=0;
+    int playingMusic=0;
+    int playingVideo=0;
+    int playingAlarm=0;
     while (continuer)
     {
         readXmlFile(commandFile,command);
@@ -109,7 +120,7 @@ int main(int argc, char **argv)
                 FMOD_Sound_Release(music);
                 sprintf(musicPlaying,"%s/%s",musicFolder,anAlarm.musicName);
                 printf("%s\n",musicPlaying);
-                resultat=FMOD_System_CreateStream(system, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
+                resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
                 if (resultat != FMOD_OK)
                 {
@@ -120,15 +131,78 @@ int main(int argc, char **argv)
                 FMOD_Channel_SetVolume(channel, volume);
                 FMOD_System_PlaySound(system,  music, 0, 0, &channel);
                 onetime=1;
+                playingAlarm=1;
         }
-
 
         switch(action)
         {
+
+
+            case 1: //play music
+                {
+                FMOD_Sound_Release(music);
+                sprintf(musicPlaying,"%s/%s",musicFolder,command[1]);
+                resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
+
+                if (resultat != FMOD_OK)
+                    {
+                    fprintf(stderr, "Cannot read the mp3 file\n");
+                    exit(EXIT_FAILURE);
+                    }
+
+                FMOD_Channel_SetVolume(channel, volume);
+                FMOD_System_PlaySound(syst,  music, 0, 0, &channel);
+                modifyXml(commandFile);
+                playingMusic=1;
+                break;
+                }
+
+            case 2: //play random music
+                {
+                FMOD_Sound_Release(music);
+
+                srand(time(NULL));
+                int r = rand()%musicNumber;
+
+                getFolderFiles(musicFolder,musicName);
+
+                sprintf(musicPlaying,"%s/%s",musicFolder,musicName[r]);
+                resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
+
+                if (resultat != FMOD_OK)
+                {
+                fprintf(stderr, "Cannot read the mp3 file\n");
+                exit(EXIT_FAILURE);
+                }
+
+                FMOD_Channel_SetVolume(channel, volume);
+                FMOD_System_PlaySound(syst,  music, 0, 0, &channel);
+                modifyXml(commandFile);
+                playingMusic=1;
+                break;
+                }
+            case 3 : //play video
+                {
+                playVideo(videoFolder,command);
+                break;
+                }
+        }
+
+
+
+    if (playingMusic==1)
+    {
+
+        readXmlFile(commandMusicFile,commandMusic);
+       // printf("%s",command[0]);
+
+        actionMusic=returnAction(commandMusic);
+        switch(actionMusic)
+        {
             case 1:
                 {
-                continuer = 0;
-                modifyXml(commandFile);
+                playingMusic = 0;
+                modifyXml(commandMusicFile);
                 break;
                 }
 
@@ -140,14 +214,14 @@ int main(int argc, char **argv)
                     fprintf(stderr, "Cannot pause file\n");
 
                 }
-                modifyXml(commandFile);
+                modifyXml(commandMusicFile);
                 break;
                 }
 
             case 3:
                 {
                 FMOD_Channel_SetPaused(channel, 0);
-                modifyXml(commandFile);
+                modifyXml(commandMusicFile);
                 break;
                 }
 
@@ -163,7 +237,7 @@ int main(int argc, char **argv)
                     {
                         printf("plus fort");
                     }
-                modifyXml(commandFile);
+                modifyXml(commandMusicFile);
                 break;
                 }
             case 5:
@@ -178,52 +252,55 @@ int main(int argc, char **argv)
                     {
                         printf("moins fort");
                     }
-                modifyXml(commandFile);
+                modifyXml(commandMusicFile);
+                break;
+                }
+        }
+    }
+
+    if(playingVideo==1)
+    {
+        readXmlFile(commandVideoFile,commandVideo);
+       // printf("%s",command[0]);
+
+        actionVideo=returnAction(commandVideo);
+        switch(actionVideo)
+        {
+            case 1:
+                {
+                stopVideo();
+                modifyXml(commandVideoFile);
+                videoPlaying=0;
                 break;
                 }
 
-            case 6:
+            case 2:
                 {
-                FMOD_Sound_Release(music);
-                resultat=FMOD_System_CreateStream(system, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
-
-                if (resultat != FMOD_OK)
-                {
-                fprintf(stderr, "Cannot read the mp3 file\n");
-                exit(EXIT_FAILURE);
-                }
-
-                FMOD_Channel_SetVolume(channel, volume);
-                FMOD_System_PlaySound(system,  music, 0, 0, &channel);
-                modifyXml(commandFile);
+                pauseVideo();
+                modifyXml(commandVideoFile);
                 break;
                 }
 
-            case 7:
+            case 3:
                 {
-                FMOD_Sound_Release(music);
-                char musicPlaying[100];
-                srand(time(NULL));
-                int r = rand()%musicNumber;
-
-                getFolderFiles(musicFolder,musicName);
-
-                sprintf(musicPlaying,"%s/%s",musicFolder,musicName[r]);
-                resultat=FMOD_System_CreateStream(system, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
-
-                if (resultat != FMOD_OK)
-                {
-                fprintf(stderr, "Cannot read the mp3 file\n");
-                exit(EXIT_FAILURE);
-                }
-
-                FMOD_Channel_SetVolume(channel, volume);
-                FMOD_System_PlaySound(system,  music, 0, 0, &channel);
-                modifyXml(commandFile);
+                continueVideo();
+                modifyXml(commandVideoFile);
                 break;
                 }
 
-
+            case 4:
+                {
+                upVolumeVideo();
+                modifyXml(commandVideoFile);
+                break;
+                }
+            case 5:
+                {
+                downVolumeVideo();
+                modifyXml(commandVideoFile);
+                break;
+                }
+        }
 
         }
 
