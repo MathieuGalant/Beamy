@@ -27,39 +27,40 @@ int returnAction(char * command[])
 
             else if (strcmp(command[0], "play video") == 0)
                 {
-                    action = 99;
-                }
+                    action = 3;
 
+                }
+                else action=99;
 
     return action;
 }
 
 
-int returnMusicAction(char * command[])
+int returnMusicAction(char * commandMusic[])
 
 {
     int action;
   //  printf("hello");
-      if (strcmp(command[0], "quit") == 0)
+      if (strcmp(commandMusic[0], "quit") == 0)
             {
                 action = 1;
             }
 
-        else if (strcmp(command[0], "pause") == 0)
+        else if (strcmp(commandMusic[0], "pause") == 0)
             {
                 action = 2;
             }
 
-            else if (strcmp(command[0], "continue") == 0)
+            else if (strcmp(commandMusic[0], "continue") == 0)
                 {
                     action = 3;
                 }
 
-                else if (strcmp(command[0], "volume up") == 0)
+                else if (strcmp(commandMusic[0], "volume up") == 0)
                     {
                         action = 4;
                     }
-                    else if (strcmp(command[0], "volume down") == 0)
+                    else if (strcmp(commandMusic[0], "volume down") == 0)
                         {
                             action = 5;
                         }
@@ -68,31 +69,31 @@ int returnMusicAction(char * command[])
     return action;
 }
 
-int returnVideoAction(char * command[])
+int returnVideoAction(char * commandVideo[])
 
 {
     int action;
   //  printf("hello");
-      if (strcmp(command[0], "quit") == 0)
+      if (strcmp(commandVideo[0], "quit") == 0)
             {
                 action = 1;
             }
 
-        else if (strcmp(command[0], "pause") == 0)
+        else if (strcmp(commandVideo[0], "pause") == 0)
             {
                 action = 2;
             }
 
-            else if (strcmp(command[0], "continue") == 0)
+            else if (strcmp(commandVideo[0], "continue") == 0)
                 {
                     action = 3;
                 }
 
-                else if (strcmp(command[0], "volume down") == 0)
+                else if (strcmp(commandVideo[0], "volume down") == 0)
                     {
                         action = 4;
                     }
-                    else if (strcmp(command[0], "volume down") == 0)
+                    else if (strcmp(commandVideo[0], "volume down") == 0)
                         {
                             action = 5;
                         }

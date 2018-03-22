@@ -1,6 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <stdio.h>s
 #include <string.h>
 #include <libxml2/libxml/parser.h>
 #include <fmod.h>
@@ -29,12 +29,13 @@ int main(int argc, char **argv)
     char *commandFile= "XML/command.xml";
     char *commandMusicFile="XML/commandMusic.xml";
     char *commandAlarmFile="XML/commandAlarm.xml";
+    char *commandVideoFile="XML/commandVideo.xml";
     char *alarmFile="XML/alarm.xml";
-    char *musicName[20];
-    char *command[1];
-    char *commandVideo[0];
-    char *commandMusic[0];
-    char musicPlaying[100];
+    char *musicName[20]={"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
+    char *command[1]={"0","0"};
+    char *commandVideo[1]={"0","0"};
+    char *commandMusic[1]={"0","0"};
+    char *musicPlaying;
     int continuer=1;
 
 
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
 
 
   //  displayAlarms(alarm_default,1);
-    displayAnAlarm(&alarm_default);
+//    displayAnAlarm(&alarm_default);
 
 
 
@@ -98,7 +99,7 @@ int main(int argc, char **argv)
     int action=0;
     int actionMusic=0;
     int actionVideo=0;
-    int actionAlarm=0
+    int actionAlarm=0;
     int onetime=0;
     int playingMusic=0;
     int playingVideo=0;
@@ -106,7 +107,7 @@ int main(int argc, char **argv)
     while (continuer)
     {
         readXmlFile(commandFile,command);
-       // printf("%s",command[0]);
+      //  printf("%s  %s",command[0],command[1]);
 
         action=returnAction(command);
 
@@ -116,23 +117,23 @@ int main(int argc, char **argv)
        // printf("%d\n",timeinfo->tm_min);
 
         if (timeinfo->tm_wday==anAlarm.day && timeinfo->tm_hour==anAlarm.hour && timeinfo->tm_min==anAlarm.min && onetime==0)
-        {
+            {
                 FMOD_Sound_Release(music);
                 sprintf(musicPlaying,"%s/%s",musicFolder,anAlarm.musicName);
                 printf("%s\n",musicPlaying);
                 resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
                 if (resultat != FMOD_OK)
-                {
-                fprintf(stderr, "Cannot read the mp3 file\n");
-                exit(EXIT_FAILURE);
-                }
+                    {
+                    fprintf(stderr, "Cannot read the mp3 file\n");
+                    exit(EXIT_FAILURE);
+                    }
 
                 FMOD_Channel_SetVolume(channel, volume);
                 FMOD_System_PlaySound(system,  music, 0, 0, &channel);
                 onetime=1;
                 playingAlarm=1;
-        }
+            }
 
         switch(action)
         {
@@ -142,6 +143,7 @@ int main(int argc, char **argv)
                 {
                 FMOD_Sound_Release(music);
                 sprintf(musicPlaying,"%s/%s",musicFolder,command[1]);
+                printf("%s",musicPlaying);
                 resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
                 if (resultat != FMOD_OK)
@@ -170,10 +172,10 @@ int main(int argc, char **argv)
                 resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
                 if (resultat != FMOD_OK)
-                {
-                fprintf(stderr, "Cannot read the mp3 file\n");
-                exit(EXIT_FAILURE);
-                }
+                    {
+                    fprintf(stderr, "Cannot read the mp3 file\n");
+                    exit(EXIT_FAILURE);
+                    }
 
                 FMOD_Channel_SetVolume(channel, volume);
                 FMOD_System_PlaySound(syst,  music, 0, 0, &channel);
@@ -184,6 +186,7 @@ int main(int argc, char **argv)
             case 3 : //play video
                 {
                 playVideo(videoFolder,command);
+                playingVideo=1;
                 break;
                 }
         }
@@ -194,13 +197,14 @@ int main(int argc, char **argv)
     {
 
         readXmlFile(commandMusicFile,commandMusic);
-       // printf("%s",command[0]);
+        printf("%s",commandMusic[0]);
 
-        actionMusic=returnAction(commandMusic);
+        actionMusic=returnMusicAction(commandMusic);
         switch(actionMusic)
         {
             case 1:
                 {
+                FMOD_Sound_Release(music);
                 playingMusic = 0;
                 modifyXml(commandMusicFile);
                 break;
@@ -263,14 +267,14 @@ int main(int argc, char **argv)
         readXmlFile(commandVideoFile,commandVideo);
        // printf("%s",command[0]);
 
-        actionVideo=returnAction(commandVideo);
+        actionVideo=returnVideoAction(commandVideo);
         switch(actionVideo)
         {
             case 1:
                 {
                 stopVideo();
                 modifyXml(commandVideoFile);
-                videoPlaying=0;
+                playingVideo=0;
                 break;
                 }
 

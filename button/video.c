@@ -14,7 +14,7 @@
 playVideo(char *videoFolder,char *command[])
 {
     char *videoPlaying;
-    sprintf(videoPlaying,"omxplayer %s/%s",videoFolder,command[1]);
+    sprintf(videoPlaying,"omxplayer --win \"1000 500 1920 1080\" %s/%s",videoFolder,command[1]);
     system(videoPlaying);
 
 }

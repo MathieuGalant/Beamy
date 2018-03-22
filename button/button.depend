@@ -12,6 +12,8 @@
 	"alarm.h"
 	"definition.h"
 
+1520958909 n.h"
+
 1520611411 source:/home/pi/Desktop/beamy/button/test.c
 
 1520932503 source:/home/pi/Desktop/beamy/button/command.c
@@ -22,6 +24,8 @@
 	<libxml2/libxml/parser.h>
 	<fmod.h>
 	<dirent.h>
+
+1520932503 
 
 1520950324 /home/pi/Desktop/beamy/button/xml.h
 
@@ -59,6 +63,135 @@
 1520958909 c:\users\mgt4\desktop\beamy arduino\button\definition.h
 
 1520958909 source:c:\users\mgt4\desktop\beamy arduino\button\xml.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"definition.h"
+
+1521222518 source:/home/pi/Desktop/button/alarm.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"definition.h"
+
+1521222518 /home/pi/Desktop/button/definition.h
+
+1521222518 source:/home/pi/Desktop/button/command.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+
+1520267129 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod.h
+	"fmod_common.h"
+
+1520267129 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod_common.h
+	"fmod_codec.h"
+	"fmod_dsp.h"
+	"fmod_output.h"
+
+1520267129 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod_codec.h
+
+1520267130 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod_dsp.h
+	"fmod_dsp_effects.h"
+
+1520267130 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod_dsp_effects.h
+
+1520267130 /home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc/fmod_output.h
+
+1521452518 source:/home/pi/Desktop/button/main.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"xml.h"
+	"command.h"
+	"alarm.h"
+	"definition.h"
+	"video.h"
+
+1521222518 /home/pi/Desktop/button/xml.h
+
+1521222518 /home/pi/Desktop/button/command.h
+
+1521222518 /home/pi/Desktop/button/alarm.h
+	"definition.h"
+
+1521222518 /home/pi/Desktop/button/video.h
+
+1521222518 source:/home/pi/Desktop/button/xml.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"definition.h"
+
+1521222518 source:/home/pi/Desktop/beamy/button/alarm.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"definition.h"
+
+1521222518 /home/pi/Desktop/beamy/button/definition.h
+
+1521455830 source:/home/pi/Desktop/beamy/button/command.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+
+1521456188 source:/home/pi/Desktop/beamy/button/main.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"xml.h"
+	"command.h"
+	"alarm.h"
+	"definition.h"
+	"video.h"
+
+1521222518 /home/pi/Desktop/beamy/button/xml.h
+
+1521455849 /home/pi/Desktop/beamy/button/command.h
+
+1521222518 /home/pi/Desktop/beamy/button/alarm.h
+	"definition.h"
+
+1521222518 /home/pi/Desktop/beamy/button/video.h
+
+1521222518 source:/home/pi/Desktop/beamy/button/xml.c
+	<time.h>
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<libxml2/libxml/parser.h>
+	<fmod.h>
+	<dirent.h>
+	"definition.h"
+
+1521452062 source:/home/pi/Desktop/beamy/button/video.c
 	<time.h>
 	<stdlib.h>
 	<stdio.h>
