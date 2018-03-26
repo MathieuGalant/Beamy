@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 
 
     int numberOfAlarm=0;
-    struct alarm anAlarm;
-    struct alarm alarmCollection[10];
+    Alarm anAlarm;
+    List *alarmList;
 
     struct tm * timeinfo;
 
@@ -58,11 +58,7 @@ int main(int argc, char **argv)
 
 
 
-    displayAnAlarm(&alarmCollection[0]);
-  //  getFolderFiles(musicFolder,musicName);
-  //  printf("%s\n",musicName[0]);
-  //  sprintf(musicPlaying,"%s/%s",musicFolder,musicName[0]);
-//    printf("%s\n",musicPlaying);
+
 
     FMOD_SYSTEM *syst;
     FMOD_CHANNEL *channel = 0;
@@ -107,7 +103,7 @@ int main(int argc, char **argv)
         action=returnAction(command);
 
         timeinfo=getTime();
-     //   printf("%d\n",timeinfo->tm_wday);
+        printf("%d\n",timeinfo->tm_wday);
       //  printf("%d\n",timeinfo->tm_hour);
        // printf("%d\n",timeinfo->tm_min);
 
@@ -115,23 +111,31 @@ int main(int argc, char **argv)
         if (strcmp(addAlarm[0],"1")==0) // check if someone is adding an alarm
         {
             readAlarmXmlFile(alarmFile,&anAlarm);
-            saveAlarm(numberOfAlarm, &alarmCollection[anAlarm.ID],&anAlarm);
+            if(numberOfAlarm==0)
+            {
+                alarmList=initializeAlarmList(&anAlarm);
+                numberOfAlarm++;
+            }
+            else
+            {
+            saveAlarm(alarmList,&anAlarm);
+            displayAlarms(alarmList);
             numberOfAlarm++;
-            displayAlarms(&alarmCollection[10],numberOfAlarm);
             printf("%d\n",numberOfAlarm);
             modifyXml(addAlarmFile);
+            }
         }
 
 
 
-
+        Alarm *current=alarmList->first;
         int i=1;
-        while (i<=numberOfAlarm)
+        while (current != NULL)
         {
-            if (timeinfo->tm_wday==alarmCollection[i-1].day && timeinfo->tm_hour==alarmCollection[i-1].hour && timeinfo->tm_min==alarmCollection[i-1].min && playingAlarm==0)
+            if (timeinfo->tm_wday==current->day && timeinfo->tm_hour==current->hour && timeinfo->tm_min==current->min && playingAlarm==0)
             {
                 FMOD_Sound_Release(music);
-                sprintf(musicPlaying,"%s/%s",musicFolder,alarmCollection[i-1].musicName);
+                sprintf(musicPlaying,"%s/%s",musicFolder,current->musicName);
                 printf("%s\n",musicPlaying);
                 resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
@@ -325,15 +329,15 @@ int main(int argc, char **argv)
 
 
 
-    if(playingAlarm==1)
+    if(playingAlarm==1) // check if an alarm is ringing
     {
         readXmlFile(commandAlarmFile,commandAlarm);
        // printf("%s",command[0]);
 
         actionAlarm=returnAlarmAction(commandAlarm);
-        switch(actionVideo)
+        switch(actionAlarm)
         {
-            case 1:
+            case 1: // stop the alarm
                 {
                 FMOD_Sound_Release(music);
                 displayMagic();
@@ -342,7 +346,7 @@ int main(int argc, char **argv)
                 break;
                 }
 
-            case 2:
+            case 2: // snooze the alarm
                 {
                 FMOD_Sound_Release(music);
                 modifyXml(commandAlarmFile);
@@ -350,13 +354,7 @@ int main(int argc, char **argv)
                 break;
                 }
 
-            case 3:
-                {
-                continueVideo();
-                modifyXml(commandAlarmFile);
-                playingAlarm=0;
-                break;
-                }
+
 
         }
 

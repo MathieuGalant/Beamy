@@ -69,6 +69,7 @@ int returnMusicAction(char * commandMusic[])
     return action;
 }
 
+
 int returnVideoAction(char * commandVideo[])
 
 {
@@ -112,17 +113,12 @@ int returnAlarmAction(char * commandAlarm[])
                 action = 1;
             }
 
-        else if (strcmp(command[0], "snooze") == 0)
+        else if (strcmp(commandAlarm[0], "snooze") == 0)
             {
                 action = 2;
             }
 
-            else if (strcmp(command[0], "") == 0)
-                {
-                    action = 3;
-
-                }
-                else action=99;
+             else action=99;
 
     return action;
 }

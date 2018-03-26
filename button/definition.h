@@ -6,8 +6,12 @@ typedef int bool;
 #define false 0
 
 typedef enum {SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY} weekday;
+typedef struct Alarm Alarm;
+typedef struct List List;
 
-struct alarm {
+
+struct Alarm
+{
     weekday day;
     int hour;
     int min;
@@ -15,6 +19,12 @@ struct alarm {
     bool state;
     int delay;
     int ID;
+    Alarm *next;
+};
+
+struct List
+{
+    Alarm *first;
 };
 
 

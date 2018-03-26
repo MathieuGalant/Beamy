@@ -1,11 +1,12 @@
-#ifndef ALARM_H_INCLUDED
-#define ALARM_H_INCLUDED
+#ifndef Alarm_H_INCLUDED
+#define Alarm_H_INCLUDED
 
 #include "definition.h"
-void displayAnAlarm(struct alarm *anAlarm);
-void displayAlarms(struct alarm alarmCollection[],int numberOfAlarm);
-int saveAlarm(int numberOfAlarm, struct alarm alarmCollection[],struct alarm *anAlarm);
+List *initializeAlarmList(Alarm *anAlarm);
+void displayAnAlarm(Alarm *anAlarm);
+void displayAlarms(List *AlarmList);
+int saveAlarm(List *AlarmList, Alarm *anAlarm);
 struct tm * getTime ();
 void delay(unsigned int mseconds);
 
-#endif // ALARM_H_INCLUDED
+#endif // Alarm_H_INCLUDED

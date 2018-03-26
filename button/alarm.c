@@ -17,47 +17,71 @@
 
 
 
+List *initializeAlarmList(Alarm *anAlarm)
+{
+    List *AlarmList=malloc(sizeof(*AlarmList));
+    Alarm *newAlarm=malloc(sizeof(*anAlarm));
 
+    if (AlarmList==NULL || anAlarm == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
 
+    newAlarm->day=anAlarm->day;
+    newAlarm->hour=anAlarm->hour;
+    newAlarm->min=anAlarm->min;
+    strcpy(newAlarm->musicName,anAlarm->musicName);
+    newAlarm->state=anAlarm->state;
+    newAlarm->delay=anAlarm->delay;
+    newAlarm->ID=anAlarm->ID;
+    newAlarm->next=NULL;
 
-void displayAlarms(struct alarm alarmCollection[],int numberOfAlarm)
+    AlarmList->first=anAlarm;
+    return AlarmList;
+}
+
+void displayAlarms(List *AlarmList)
 {
 
-                printf("\n Alarms :\n");
+    printf("\n Alarms :\n");
+    Alarm *current=AlarmList->first;
 
-    for (int i = 0;i<numberOfAlarm;i++ ) // We don't know the array's size, so we must indicate it (5 here) or give it in parameters
+    while (current != NULL)
     {
-                printf("Day : %d \n",alarmCollection[i].day);
-                printf("Hour : %d \n",alarmCollection[i].hour);
-                printf("Minutes : %d \n",alarmCollection[i].min);
-                printf("Music name : %s \n",alarmCollection[i].musicName);
-                printf("State : %d \n",alarmCollection[i].state);
-                printf("Delay : %d \n",alarmCollection[i].delay);
-                printf("ID : %d \n \n",alarmCollection[i].ID);
+                printf("Day : %d \n",current->day);
+                printf("Hour : %d \n",current->hour);
+                printf("Minutes : %d \n",current->min);
+                printf("Music name : %s \n",current->musicName);
+                printf("State : %d \n",current->state);
+                printf("Delay : %d \n",current->delay);
+                printf("ID : %d \n \n",current->ID);
 
     }
 
 }
-void saveAlarm(int numberOfAlarm, struct alarm alarmCollection[],struct alarm *anAlarm)
+
+void saveAlarm(List *AlarmList, Alarm *anAlarm)
 {
+        Alarm *newAlarm =malloc(sizeof(*newAlarm));
 
 
-
-        alarmCollection[anAlarm->ID].day=anAlarm->day;
-        alarmCollection[anAlarm->ID].hour=anAlarm->hour;
-        alarmCollection[anAlarm->ID].min=anAlarm->min;
-        strcpy(alarmCollection[anAlarm->ID].musicName,anAlarm->musicName);
-        alarmCollection[anAlarm->ID].state=anAlarm->state;
-        alarmCollection[anAlarm->ID].delay=anAlarm->delay;
-        alarmCollection[anAlarm->ID].ID=anAlarm->ID;
-        //printf("new alarm added");
+        newAlarm->day=anAlarm->day;
+        newAlarm->hour=anAlarm->hour;
+        newAlarm->min=anAlarm->min;
+        strcpy(newAlarm->musicName,anAlarm->musicName);
+        newAlarm->state=anAlarm->state;
+        newAlarm->delay=anAlarm->delay;
+        newAlarm->ID=anAlarm->ID;
+        //printf("new Alarm added");
+        newAlarm->next=AlarmList->first;
+        AlarmList->first=newAlarm;
 
 
 }
 
 
 
-void displayAnAlarm(struct alarm *anAlarm)
+void displayAnAlarm(Alarm *anAlarm)
  {
 
     printf("Day : %d \n",anAlarm->day);

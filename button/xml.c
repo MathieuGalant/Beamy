@@ -94,7 +94,7 @@ void modifyXml(char * filename)
 
 
 
-void readAlarmXmlFile(char *filename, struct alarm *anAlarm)
+void readAlarmXmlFile(char *filename, Alarm *anAlarm)
 {
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
@@ -118,7 +118,7 @@ void readAlarmXmlFile(char *filename, struct alarm *anAlarm)
 }
 
 
-void getAlarmXml(xmlNode * node,int i,  struct alarm *anAlarm)
+void getAlarmXml(xmlNode * node,int i, Alarm *anAlarm)
 {
     char *ptr;
     int ret;
