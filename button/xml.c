@@ -121,13 +121,13 @@ void readAlarmXmlFile(char *filename, struct alarm *anAlarm)
 void getAlarmXml(xmlNode * node,int i,  struct alarm *anAlarm)
 {
     char *ptr;
-    long ret;
+    int ret;
 
     while(node)
     {
         if(node->type == XML_ELEMENT_NODE)
         {
-      //    printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
+          //printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
           if (is_leaf(node))
           {
             switch(i)
@@ -158,7 +158,12 @@ void getAlarmXml(xmlNode * node,int i,  struct alarm *anAlarm)
                 ret = strtol(xmlNodeGetContent(node), &ptr, 10);
                 anAlarm->delay=ret;
                 }
-                case 6: strcpy(anAlarm->path,xmlNodeGetContent(node));
+                case 6:
+                {
+                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+
+                anAlarm->ID=ret;
+                }
 
             }
 

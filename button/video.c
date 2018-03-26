@@ -1,5 +1,7 @@
 #include <time.h>
-
+#include <unistd.h> /* for fork */
+#include <sys/types.h> /* for pid_t */
+#include <sys/wait.h> /* for wait */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,7 +17,13 @@ playVideo(char *videoFolder,char *command[])
 {
     char *videoPlaying;
     sprintf(videoPlaying,"omxplayer --win \"1000 500 1920 1080\" %s/%s",videoFolder,command[1]);
-    system(videoPlaying);
+    pid_t pid=fork();
+    if (pid==0)
+    { /* child process */
+        system(videoPlaying);
+        exit(127); /* only if execv fails */
+    }
+
 
 }
 

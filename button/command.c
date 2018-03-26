@@ -101,3 +101,28 @@ int returnVideoAction(char * commandVideo[])
                         else action=99;
     return action;
 }
+
+int returnAlarmAction(char * commandAlarm[])
+
+{
+    int action;
+  //  printf("hello");
+      if (strcmp(commandAlarm[0], "stop") == 0)
+            {
+                action = 1;
+            }
+
+        else if (strcmp(command[0], "snooze") == 0)
+            {
+                action = 2;
+            }
+
+            else if (strcmp(command[0], "") == 0)
+                {
+                    action = 3;
+
+                }
+                else action=99;
+
+    return action;
+}

@@ -9,12 +9,12 @@ typedef enum {SUNDAY,MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY} weekday;
 
 struct alarm {
     weekday day;
-    int hour ;
-    int min ;
+    int hour;
+    int min;
     char musicName[30];
     bool state;
     int delay;
-    char path[80];
+    int ID;
 };
 
 
