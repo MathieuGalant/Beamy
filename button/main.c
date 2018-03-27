@@ -38,15 +38,16 @@ int main(int argc, char **argv)
     char *commandVideo[1]={"0","0"};
     char *commandMusic[1]={"0","0"};
     char *commandAlarm[1]={"0","0"};
-    char *musicPlaying;
+    char musicPlaying[50];
+    char alarmPlaying[50];
     int continuer=1;
 
 
 
     int numberOfAlarm=0;
     Alarm anAlarm;
-    List *alarmList;
-
+    List *alarmList=NULL;
+    Alarm *searchAlarm=NULL;
     struct tm * timeinfo;
 
 
@@ -103,7 +104,7 @@ int main(int argc, char **argv)
         action=returnAction(command);
 
         timeinfo=getTime();
-        printf("%d\n",timeinfo->tm_wday);
+        //printf("%d\n",timeinfo->tm_wday);
       //  printf("%d\n",timeinfo->tm_hour);
        // printf("%d\n",timeinfo->tm_min);
 
@@ -111,46 +112,58 @@ int main(int argc, char **argv)
         if (strcmp(addAlarm[0],"1")==0) // check if someone is adding an alarm
         {
             readAlarmXmlFile(alarmFile,&anAlarm);
+          //  displayAnAlarm(&anAlarm);
             if(numberOfAlarm==0)
             {
                 alarmList=initializeAlarmList(&anAlarm);
                 numberOfAlarm++;
+                modifyXml(addAlarmFile);
+              //  displayAlarms(alarmList);
             }
             else
             {
-            saveAlarm(alarmList,&anAlarm);
-            displayAlarms(alarmList);
-            numberOfAlarm++;
-            printf("%d\n",numberOfAlarm);
-            modifyXml(addAlarmFile);
+                alarmList=searchAlarmID(alarmList,anAlarm.ID);
+                displayAlarms(alarmList);
+
+                alarmList=saveAlarm(alarmList,&anAlarm);
+                displayAlarms(alarmList);
+                printf("%d\n",numberOfAlarm);
+                modifyXml(addAlarmFile);
             }
         }
 
 
-
-        Alarm *current=alarmList->first;
-        int i=1;
-        while (current != NULL)
+        if (numberOfAlarm >0)
         {
-            if (timeinfo->tm_wday==current->day && timeinfo->tm_hour==current->hour && timeinfo->tm_min==current->min && playingAlarm==0)
+            Alarm *current=alarmList->first;
+
+
+            while (current!=NULL)
             {
-                FMOD_Sound_Release(music);
-                sprintf(musicPlaying,"%s/%s",musicFolder,current->musicName);
-                printf("%s\n",musicPlaying);
-                resultat=FMOD_System_CreateStream(syst, musicPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
 
-                if (resultat != FMOD_OK)
-                    {
-                    fprintf(stderr, "Cannot read the mp3 file\n");
-                    exit(EXIT_FAILURE);
-                    }
+                if (timeinfo->tm_wday==current->day && timeinfo->tm_hour==current->hour && timeinfo->tm_min==current->min && timeinfo->tm_sec<5 && playingAlarm==0)
+                {
+                    FMOD_Sound_Release(music);
 
-                FMOD_Channel_SetVolume(channel, volume);
-                FMOD_System_PlaySound(syst,  music, 0, 0, &channel);
 
-                playingAlarm=1;
+                    sprintf(alarmPlaying,"%s/%s",musicFolder,current->musicName);
+                    printf("%s\n",alarmPlaying);
+                    resultat=FMOD_System_CreateStream(syst, alarmPlaying, FMOD_LOOP_NORMAL | FMOD_2D, &exinfo, &music);
+
+                    if (resultat != FMOD_OK)
+                        {
+                        fprintf(stderr, "Cannot read the mp3 file\n");
+                        exit(EXIT_FAILURE);
+                        }
+
+                        FMOD_Channel_SetVolume(channel, volume);
+                        FMOD_System_PlaySound(syst,  music, 0, 0, &channel);
+
+                    playingAlarm=1;
+                }
+                current =current->next;
+
             }
-            i++;
         }
 
         switch(action)

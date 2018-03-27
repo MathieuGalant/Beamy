@@ -5,7 +5,9 @@
 List *initializeAlarmList(Alarm *anAlarm);
 void displayAnAlarm(Alarm *anAlarm);
 void displayAlarms(List *AlarmList);
-int saveAlarm(List *AlarmList, Alarm *anAlarm);
+List *saveAlarm(List *AlarmList, Alarm *anAlarm);
+List *deleteAlarm(List *AlarmList, int ID);
+List *searchAlarmID(List *AlarmList, int ID);
 struct tm * getTime ();
 void delay(unsigned int mseconds);
 
