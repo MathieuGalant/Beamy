@@ -1,7 +1,7 @@
 #ifndef VIDEO_H_INCLUDED
 #define VIDEO_H_INCLUDED
 
-playVideo(char *videoFolder,char *command[]);
+playVideo(char *videoFolder,char videoName[]);
 stopVideo();
 pauseVideo();
 continueVideo();

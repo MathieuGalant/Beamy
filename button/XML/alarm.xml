@@ -1,8 +1,7 @@
 <alarm>
-	<day>2</day>
-	<hour>16</hour>
-	<minute>3</minute>
-	<musicName>Kalimba.mp3</musicName>
+	<day>4</day>
+	<hour>8</hour>
+	<minute>0</minute>
 	<state>0</state>
 	<delay>5</delay>
 	<ID>2</ID>

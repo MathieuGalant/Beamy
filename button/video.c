@@ -13,10 +13,11 @@
 
 
 
-playVideo(char *videoFolder,char *command[])
+playVideo(char *videoFolder,char videoName[])
 {
     char *videoPlaying;
-    sprintf(videoPlaying,"omxplayer --win \"1000 500 1920 1080\" %s/%s",videoFolder,command[1]);
+    sprintf(videoPlaying,"omxplayer --win \"1000 500 1920 1080\" %s/%s",videoFolder,videoName);
+    printf("%s\n",videoPlaying);
     pid_t pid=fork();
     if (pid==0)
     { /* child process */
@@ -29,7 +30,7 @@ playVideo(char *videoFolder,char *command[])
 
 stopVideo()
 {
-system("./media/dbuscontrol.sh exit");
+system("./media/dbuscontrol.sh stop");
 }
 
 

@@ -34,12 +34,13 @@ int main(int argc, char **argv)
     char *alarmFile="XML/alarm.xml";
     char *musicName[20]={"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
     char *addAlarm[1]={"0","0"};
-    char *command[1]={"0","0"};
+    char *command[2]={"0","0","0"};
     char *commandVideo[1]={"0","0"};
     char *commandMusic[1]={"0","0"};
     char *commandAlarm[1]={"0","0"};
     char musicPlaying[50];
     char alarmPlaying[50];
+    char videoName[50];
     int continuer=1;
 
 
@@ -99,10 +100,8 @@ int main(int argc, char **argv)
     while (continuer)
     {
         readXmlFile(commandFile,command);
-        //printf("%s  %s",command[0],command[1]);
 
         action=returnAction(command);
-
         timeinfo=getTime();
         //printf("%d\n",timeinfo->tm_wday);
       //  printf("%d\n",timeinfo->tm_hour);
@@ -216,7 +215,9 @@ int main(int argc, char **argv)
                 }
             case 3 : //play video
                 {
-                playVideo(videoFolder,command);
+                printf("%s  %s\n",command[0],command[1]);
+                strcpy(videoName,command[1]);
+                playVideo(videoFolder,videoName);
                 playingVideo=1;
                 modifyXml(commandFile);
                 break;
@@ -229,7 +230,7 @@ int main(int argc, char **argv)
     {
 
         readXmlFile(commandMusicFile,commandMusic); // read the command music XML
-        printf("%s",commandMusic[0]);
+       // printf("%s",commandMusic[0]);
 
         actionMusic=returnMusicAction(commandMusic); // return an action base on what is on the XML music
         switch(actionMusic)
