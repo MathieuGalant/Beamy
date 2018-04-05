@@ -64,6 +64,14 @@ int returnMusicAction(char * commandMusic[])
                         {
                             action = 5;
                         }
+                        else if (strcmp(commandMusic[0], "next") == 0)
+                            {
+                                action = 6;
+                            }
+                            else if (strcmp(commandMusic[0], "previous") == 0)
+                            {
+                                action = 7;
+                            }
 
                         else action=99;
     return action;

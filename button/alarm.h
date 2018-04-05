@@ -10,5 +10,6 @@ List *deleteAlarm(List *AlarmList, int ID);
 List *searchAlarmID(List *AlarmList, int ID);
 struct tm * getTime ();
 void delay(unsigned int mseconds);
-
+void displayMagic();
+void closeMagic();
 #endif // Alarm_H_INCLUDED

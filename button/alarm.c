@@ -186,10 +186,16 @@ void displayMagic()
     pid_t pid=fork();
     if (pid==0)
     { /* child process */
-        system("cd ~/MagicMirror/ && DISPLAY=:0 npm start");
+        system("cd ~/MagicMirror/ && pm2 start mm.sh");
 
         exit(127); /* only if execv fails */
     }
     system("cd ~/Desktop/beamy/button/");
 }
 
+void closeMagic()
+{
+
+    system("cd ~/MagicMirror/ && pm2 stop all");
+
+}

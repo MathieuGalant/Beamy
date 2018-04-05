@@ -140,7 +140,7 @@
 	<dirent.h>
 	"definition.h"
 
-1522155733 source:/home/pi/Desktop/beamy/button/alarm.c
+1522331283 source:/home/pi/Desktop/beamy/button/alarm.c
 	<unistd.h>
 	<sys/types.h>
 	<sys/wait.h>
@@ -152,7 +152,7 @@
 
 1522075306 /home/pi/Desktop/beamy/button/definition.h
 
-1522064664 source:/home/pi/Desktop/beamy/button/command.c
+1522395394 source:/home/pi/Desktop/beamy/button/command.c
 	<time.h>
 	<stdlib.h>
 	<stdio.h>
