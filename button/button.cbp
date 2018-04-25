@@ -34,10 +34,13 @@
 			<Add directory="/usr/include/libxml2/libxml" />
 			<Add directory="/usr/include/libxml2" />
 			<Add directory="/home/pi/Downloads/fmodstudioapi11004linux/api/lowlevel/inc" />
+			<Add directory="/home/pi/Downloads/curl-7.59.0/lib" />
 		</Compiler>
 		<Linker>
 			<Add option="-lxml2" />
+			<Add option="-lcurl" />
 			<Add library="/home/pi/Desktop/beamy/button/libfmod.so" />
+			<Add library="../../../../../usr/local/lib/libcurl.so" />
 		</Linker>
 		<Unit filename="alarm.c">
 			<Option compilerVar="CC" />
@@ -55,6 +58,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="server.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="server.h" />
 		<Unit filename="video.c">
 			<Option compilerVar="CC" />
 		</Unit>

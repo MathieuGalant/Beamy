@@ -13,7 +13,7 @@
 
 
 
-playVideo(char *videoFolder,char videoName[])
+void playVideo(char *videoFolder,char videoName[])
 {
     char *videoPlaying;
     sprintf(videoPlaying,"omxplayer --win \"1000 500 1920 1080\" %s/%s",videoFolder,videoName);
@@ -28,31 +28,31 @@ playVideo(char *videoFolder,char videoName[])
 
 }
 
-stopVideo()
+void stopVideo()
 {
-system("./media/dbuscontrol.sh stop");
+    system("./media/dbuscontrol.sh stop");
 }
 
 
-pauseVideo()
+void pauseVideo()
 {
-system("./media/dbuscontrol.sh pause");
+    system("./media/dbuscontrol.sh pause");
 }
 
 
-continueVideo()
+void continueVideo()
 {
-system("./media/dbuscontrol.sh pause");
+    system("./media/dbuscontrol.sh pause");
 }
 
 
-upVolumeVideo()
+void upVolumeVideo()
 {
-system("./media/dbuscontrol.sh volumeup");
+    system("./media/dbuscontrol.sh volumeup");
 }
 
 
-downVolumeVideo()
+void downVolumeVideo()
 {
-system("./media/dbuscontrol.sh volumedown");
+    system("./media/dbuscontrol.sh volumedown");
 }

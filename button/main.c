@@ -1,6 +1,6 @@
 #include <time.h>
 #include <stdlib.h>
-#include <stdio.h>s
+#include <stdio.h>
 #include <string.h>
 #include <libxml2/libxml/parser.h>
 #include <fmod.h>
@@ -10,6 +10,8 @@
 #include "alarm.h"
 #include "definition.h"
 #include "video.h"
+#include <curl/curl.h>
+#include "server.h"
 
 
 int getPositionMusic(char name[],char *musicName[20]);
@@ -32,13 +34,13 @@ int main(int argc, char **argv)
     char *commandVideoFile="XML/commandVideo.xml";
     char *commandMagicFile="XML/magic.xml";
     char *alarmFile="XML/alarm.xml";
-    char *musicNames[20]={"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
-    char *addAlarm[1]={"0","0"};
-    char *command[2]={"0","0","0"};
-    char *commandVideo[1]={"0","0"};
-    char *commandMusic[1]={"0","0"};
-    char *commandAlarm[1]={"0","0"};
-    char *commandMagic[1]={"0","0"};
+    char *musicNames[20]={"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
+    char *addAlarm[2]={"0","0"};
+    char *command[3]={"0","0","0"};
+    char *commandVideo[2]={"0","0"};
+    char *commandMusic[2]={"0","0"};
+    char *commandAlarm[2]={"0","0"};
+    char *commandMagic[2]={"0","0"};
 
     char musicPlaying[50];
     char name[50];
@@ -47,9 +49,8 @@ int main(int argc, char **argv)
     int continuer=1;
 
 
-
     int numberOfAlarm=0;
-    Alarm anAlarm;
+    Alarm *anAlarm;
     List *alarmList=NULL;
     Alarm *searchAlarm=NULL;
     struct tm * timeinfo;
@@ -57,12 +58,11 @@ int main(int argc, char **argv)
 
 
 
-    readAlarmXmlFile(alarmFile, &anAlarm);
-    displayAnAlarm(&anAlarm);
 
 
-
-
+    printf("ok");
+   // getAlarmServer(1,alarmFile);
+    printf("ok");
 
 
     FMOD_SYSTEM *syst;
@@ -104,6 +104,7 @@ int main(int argc, char **argv)
     int musicPosition=0;
     while (continuer)
     {
+     //   printf("ok");
         FMOD_System_Update(syst);
         readXmlFile(commandFile,command);
         strcpy(name,command[1]);
@@ -116,21 +117,21 @@ int main(int argc, char **argv)
         readXmlFile(addAlarmFile, addAlarm); //read the addAlarm XML
         if (strcmp(addAlarm[0],"1")==0) // check if someone is adding an alarm
         {
-            readAlarmXmlFile(alarmFile,&anAlarm);
+            readAlarmXmlFile(alarmFile,anAlarm);
           //  displayAnAlarm(&anAlarm);
             if(numberOfAlarm==0)
             {
-                alarmList=initializeAlarmList(&anAlarm);
+                alarmList=initializeAlarmList(anAlarm);
                 numberOfAlarm++;
                 modifyXml(addAlarmFile);
-              //  displayAlarms(alarmList);
+                displayAlarms(alarmList);
             }
             else
             {
-                alarmList=searchAlarmID(alarmList,anAlarm.ID);
+                alarmList=searchAlarmID(alarmList,anAlarm->alarm_id);
                 displayAlarms(alarmList);
 
-                alarmList=saveAlarm(alarmList,&anAlarm);
+                alarmList=saveAlarm(alarmList,anAlarm);
                 displayAlarms(alarmList);
                 printf("%d\n",numberOfAlarm);
                 modifyXml(addAlarmFile);
@@ -480,7 +481,7 @@ void getFolderFiles(char *folderName, char *musicName[20])
     {
   /* could not open directory */
         perror ("");
-        return EXIT_FAILURE;
+
     }
 
 }

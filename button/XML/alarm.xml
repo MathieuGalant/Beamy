@@ -1,9 +1,15 @@
-<alarm>
-	<day>4</day>
-	<hour>8</hour>
-	<minute>0</minute>
-	<musicName>Kalimba.mp3</musicName>
-	<state>0</state>
-	<delay>5</delay>
-	<ID>2</ID>
-</alarm>
+<?xml version="1.0"?>
+<set>
+  <alarm>
+    <name>alarm</name>
+    <alarm_id>1</alarm_id>
+    <beamy_id>1</beamy_id>
+    <time>
+      <day>monday</day>
+      <hour>15</hour>
+      <minute>15</minute>
+    </time>
+    <enabled>true</enabled>
+    <running>false</running>
+  </alarm>
+</set>

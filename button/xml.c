@@ -8,7 +8,69 @@
 #include <fmod.h>
 #include <dirent.h>
 #include "definition.h"
+ #include <stdlib.h>
 
+
+int changeDay(char day[20])
+{
+
+    int action;
+  //  printf("hello");
+    if (strcmp(day, "monday") == 0)
+        {
+            action = 1;
+        }
+
+    else if (strcmp(day, "tuesday") == 0)
+            {
+                action = 2;
+            }
+
+        else if (strcmp(day, "wednesday") == 0)
+                {
+                    action = 3;
+                }
+
+            else if (strcmp(day, "thursday") == 0)
+                    {
+                        action = 4;
+                    }
+                else if (strcmp(day, "friday") == 0)
+                        {
+                            action = 5;
+                        }
+                    else if (strcmp(day, "saturday") == 0)
+                            {
+                                action = 6;
+                            }
+                        else if (strcmp(day, "sunday") == 0)
+                                {
+                                    action = 0;
+                                }
+
+
+
+    return action;
+}
+
+
+
+char changeBool(char aBool[20])
+{
+    int action;
+  //  printf("hello");
+    if (strcmp(aBool, "false") == 0)
+        {
+            action = 0;
+        }
+
+    else if (strcmp(aBool, "true") == 0)
+            {
+                action = 1;
+            }
+
+    return action;
+}
 
 
 
@@ -63,6 +125,7 @@ void getXml(xmlNode * node,int i,  char *attribut[])
 
 int is_leaf(xmlNode * node)
 {
+
   xmlNode * child = node->children;
   while(child)
   {
@@ -109,7 +172,7 @@ void readAlarmXmlFile(char *filename, Alarm *anAlarm)
 
     root_element = xmlDocGetRootElement(doc);
 
-    getAlarmXml(root_element,0,anAlarm);
+    getAlarmXml(root_element,anAlarm);
 
     xmlFreeDoc(doc);
 
@@ -118,62 +181,88 @@ void readAlarmXmlFile(char *filename, Alarm *anAlarm)
 }
 
 
-void getAlarmXml(xmlNode * node,int i, Alarm *anAlarm)
+void getAlarmXml(xmlNode * node, Alarm *anAlarm)
 {
     char *ptr;
     int ret;
+    char day[20];
 
+    int i=1;
     while(node)
     {
         if(node->type == XML_ELEMENT_NODE)
         {
-          //printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
-          if (is_leaf(node))
-          {
-            switch(i)
+
+           // printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
+
+            if (is_leaf(node))
             {
-                case 0:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
-                anAlarm->day=ret;
-                }
-                case 1:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
-                anAlarm->hour=ret;
-                }
-                case 2:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
-                anAlarm->min=ret;
-                }
-                case 3: strcpy(anAlarm->musicName,xmlNodeGetContent(node));
-                case 4:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
-                anAlarm->state=ret;
-                }
-                case 5:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
-                anAlarm->delay=ret;
-                }
-                case 6:
-                {
-                ret = strtol(xmlNodeGetContent(node), &ptr, 10);
 
-                anAlarm->ID=ret;
+                printf("%d:",i);
+                printf("%s\n",xmlNodeGetContent(node));
+
+
+                switch(i)
+                {
+                    case 1:
+                        printf("%d!",i);
+                        strcpy(anAlarm->alarmName,xmlNodeGetContent(node));
+                        i++;
+                        break;
+                    case 2:
+                        printf("%d!",i);
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->alarm_id=ret;
+                        i++;
+                        break;
+                    case 3:
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->beamy_id=ret;
+                        i++;
+                        break;
+                    case 4:
+                        ret=changeDay(xmlNodeGetContent(node));
+                        anAlarm->day=ret;
+                        i++;
+                        break;
+                    case 5:
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->hour=ret;
+                        i++;
+                        break;
+                    case 6:
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->min=ret;
+                        node = node->parent;
+                        i++;
+                        break;
+                    case 7:
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->enabled=ret;
+                        i++;
+                        break;
+                    case 8:
+                        printf("%d!",i);
+
+                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        anAlarm->running=ret;
+                        i++;
+                        break;
+                    case 9:
+                        strcpy(anAlarm->musicName,xmlNodeGetContent(node));
+                        break;
                 }
 
+            node = node->next;
+            }
+            else
+            {
+            node=node->children;
             }
 
-            i++;
+    node = node->next;
 
-          }
-        }
-        getAlarmXml(node->children,i, anAlarm);
-        node = node->next;
-
+    }
 
     }
 

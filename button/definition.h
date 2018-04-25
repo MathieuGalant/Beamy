@@ -12,13 +12,15 @@ typedef struct List List;
 
 struct Alarm
 {
+    char alarmName[30];
     weekday day;
     int hour;
     int min;
     char musicName[30];
-    bool state;
-    int delay;
-    int ID;
+    bool running;
+    bool enabled;
+    int beamy_id;
+    int alarm_id;
     Alarm *next;
 };
 

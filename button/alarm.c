@@ -24,17 +24,19 @@ List *initializeAlarmList(Alarm *anAlarm)
 
 
     if (AlarmList==NULL || anAlarm == NULL)
-    {
+        {
         exit(EXIT_FAILURE);
-    }
+        }
 
+    strcpy(newAlarm->alarmName,anAlarm->alarmName);
     newAlarm->day=anAlarm->day;
     newAlarm->hour=anAlarm->hour;
     newAlarm->min=anAlarm->min;
     strcpy(newAlarm->musicName,anAlarm->musicName);
-    newAlarm->state=anAlarm->state;
-    newAlarm->delay=anAlarm->delay;
-    newAlarm->ID=anAlarm->ID;
+    newAlarm->enabled=anAlarm->enabled;
+    newAlarm->running=anAlarm->running;
+    newAlarm->beamy_id=anAlarm->beamy_id;
+    newAlarm->alarm_id=anAlarm->alarm_id;
     newAlarm->next=NULL;
 
 
@@ -51,14 +53,14 @@ void displayAlarms(List *AlarmList)
 
     while (current!=NULL )
     {
-
+            printf("Alarm name : %s \n",current->alarmName);
             printf("Day : %d \n",current->day);
             printf("Hour : %d \n",current->hour);
             printf("Minutes : %d \n",current->min);
             printf("Music name : %s \n",current->musicName);
-            printf("State : %d \n",current->state);
-            printf("Delay : %d \n",current->delay);
-            printf("ID : %d \n \n",current->ID);
+            printf("Enabled : %d \n",current->enabled);
+            printf("Beamy ID : %d \n ",current->beamy_id);
+            printf("Alarm ID : %d \n \n",current->alarm_id);
             current =current->next;
     }
 
@@ -68,14 +70,15 @@ List *saveAlarm(List *AlarmList, Alarm *anAlarm)
 {
         Alarm *newAlarm =malloc(sizeof(*newAlarm));
 
-
+        strcpy(newAlarm->alarmName,anAlarm->alarmName);
         newAlarm->day=anAlarm->day;
         newAlarm->hour=anAlarm->hour;
         newAlarm->min=anAlarm->min;
         strcpy(newAlarm->musicName,anAlarm->musicName);
-        newAlarm->state=anAlarm->state;
-        newAlarm->delay=anAlarm->delay;
-        newAlarm->ID=anAlarm->ID;
+        newAlarm->enabled=anAlarm->enabled;
+        newAlarm->running=anAlarm->running;
+        newAlarm->beamy_id=anAlarm->beamy_id;
+        newAlarm->alarm_id=anAlarm->alarm_id;
         //printf("new Alarm added");
 
         newAlarm->next=AlarmList->first;
@@ -99,7 +102,7 @@ List *deleteAlarm(List *AlarmList, int ID)
     {
 
 
-            if(tmp->ID == ID)
+            if(tmp->alarm_id == ID)
             {
                 modif->next=tmp->next;
             }
@@ -123,7 +126,7 @@ List *searchAlarmID(List *AlarmList, int ID, int numberOfAlarm)
 
     while(tmp!=NULL )
     {
-        if(tmp->ID == ID)
+        if(tmp->alarm_id == ID)
         {
             AlarmList=deleteAlarm(AlarmList,ID);
 
@@ -146,18 +149,7 @@ List *searchAlarmID(List *AlarmList, int ID, int numberOfAlarm)
 
 
 
-void displayAnAlarm(Alarm *anAlarm)
- {
 
-    printf("Day : %d \n",anAlarm->day);
-    printf("Hour : %d \n",anAlarm->hour);
-    printf("Minutes : %d \n",anAlarm->min);
-    printf("Music name : %s \n",anAlarm->musicName);
-    printf("State : %d \n",anAlarm->state);
-    printf("Delay : %d \n",anAlarm->delay);
-    printf("ID : %d \n \n",anAlarm->ID);
-
- }
 
 
 
