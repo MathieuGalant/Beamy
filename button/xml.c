@@ -15,41 +15,35 @@ int changeDay(char day[20])
 {
 
     int action;
-  //  printf("hello");
+
     if (strcmp(day, "monday") == 0)
         {
             action = 1;
         }
-
     else if (strcmp(day, "tuesday") == 0)
-            {
-                action = 2;
-            }
-
-        else if (strcmp(day, "wednesday") == 0)
-                {
-                    action = 3;
-                }
-
-            else if (strcmp(day, "thursday") == 0)
-                    {
-                        action = 4;
-                    }
-                else if (strcmp(day, "friday") == 0)
-                        {
-                            action = 5;
-                        }
-                    else if (strcmp(day, "saturday") == 0)
-                            {
-                                action = 6;
-                            }
-                        else if (strcmp(day, "sunday") == 0)
-                                {
-                                    action = 0;
-                                }
-
-
-
+        {
+            action = 2;
+        }
+    else if (strcmp(day, "wednesday") == 0)
+        {
+            action = 3;
+        }
+    else if (strcmp(day, "thursday") == 0)
+        {
+            action = 4;
+        }
+    else if (strcmp(day, "friday") == 0)
+        {
+            action = 5;
+        }
+    else if (strcmp(day, "saturday") == 0)
+        {
+            action = 6;
+        }
+    else if (strcmp(day, "sunday") == 0)
+        {
+            action = 0;
+        }
     return action;
 }
 
@@ -58,17 +52,16 @@ int changeDay(char day[20])
 char changeBool(char aBool[20])
 {
     int action;
-  //  printf("hello");
+
     if (strcmp(aBool, "false") == 0)
         {
             action = 0;
         }
 
     else if (strcmp(aBool, "true") == 0)
-            {
-                action = 1;
-            }
-
+        {
+            action = 1;
+        }
     return action;
 }
 
@@ -101,40 +94,31 @@ void readXmlFile(char *filename,  char * attribut[])
 
 void getXml(xmlNode * node,int i,  char *attribut[])
 {
-
-
     while(node)
     {
         if(node->type == XML_ELEMENT_NODE)
         {
       //    printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
-          if (is_leaf(node))
-          {
-            attribut[i]=xmlNodeGetContent(node);
-            i++;
-
-          }
+            if (is_leaf(node))
+            {
+                attribut[i]=xmlNodeGetContent(node);
+                i++;
+            }
         }
         getXml(node->children,i, attribut);
         node = node->next;
-
-
     }
-
 }
 
 int is_leaf(xmlNode * node)
 {
-
-  xmlNode * child = node->children;
-  while(child)
-  {
-    if(child->type == XML_ELEMENT_NODE) return 0;
-
-    child = child->next;
-  }
-
-  return 1;
+    xmlNode * child = node->children;
+    while(child)
+    {
+        if(child->type == XML_ELEMENT_NODE) return 0;
+        child = child->next;
+    }
+    return 1;
 }
 
 
@@ -149,8 +133,6 @@ void modifyXml(char * filename)
     node=node->next;
   //  printf("%s",xmlNodeGetContent(node));
     xmlNodeSetContent(node, (xmlChar*)"0");
-
-
     xmlSaveFileEnc(filename, doc, "UTF-8");
 }
 
@@ -161,7 +143,6 @@ void readAlarmXmlFile(char *filename, Alarm *anAlarm)
 {
     xmlDoc *doc = NULL;
     xmlNode *root_element = NULL;
-
 
     doc = xmlReadFile(filename, NULL, 0);
 
@@ -186,13 +167,12 @@ void getAlarmXml(xmlNode * node, Alarm *anAlarm)
     char *ptr;
     int ret;
     char day[20];
-
     int i=1;
+
     while(node)
     {
         if(node->type == XML_ELEMENT_NODE)
         {
-
            // printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
 
             if (is_leaf(node))
@@ -200,7 +180,6 @@ void getAlarmXml(xmlNode * node, Alarm *anAlarm)
 
                 printf("%d:",i);
                 printf("%s\n",xmlNodeGetContent(node));
-
 
                 switch(i)
                 {
@@ -237,14 +216,12 @@ void getAlarmXml(xmlNode * node, Alarm *anAlarm)
                         i++;
                         break;
                     case 7:
-                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        ret = changeBool(xmlNodeGetContent(node));
                         anAlarm->enabled=ret;
                         i++;
                         break;
                     case 8:
-                        printf("%d!",i);
-
-                        ret = strtol(xmlNodeGetContent(node), &ptr, 10);
+                        ret = changeBool(xmlNodeGetContent(node));
                         anAlarm->running=ret;
                         i++;
                         break;
@@ -253,16 +230,15 @@ void getAlarmXml(xmlNode * node, Alarm *anAlarm)
                         break;
                 }
 
-            node = node->next;
+                node = node->next;
             }
             else
             {
-            node=node->children;
+                node=node->children;
             }
 
-    node = node->next;
-
-    }
+        node = node->next;
+        }
 
     }
 

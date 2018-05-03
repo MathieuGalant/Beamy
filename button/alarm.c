@@ -59,6 +59,7 @@ void displayAlarms(List *AlarmList)
             printf("Minutes : %d \n",current->min);
             printf("Music name : %s \n",current->musicName);
             printf("Enabled : %d \n",current->enabled);
+            printf("Running : %d \n",current->running);
             printf("Beamy ID : %d \n ",current->beamy_id);
             printf("Alarm ID : %d \n \n",current->alarm_id);
             current =current->next;
@@ -100,19 +101,15 @@ List *deleteAlarm(List *AlarmList, int ID)
     }
     while(tmp!=NULL)
     {
-
-
-            if(tmp->alarm_id == ID)
-            {
-                modif->next=tmp->next;
-            }
-            else
-            {
-                modif->next=tmp;
-            }
+        if(tmp->alarm_id == ID)
+        {
+            modif->next=tmp->next;
+        }
+        else
+        {
+            modif->next=tmp;
+        }
         tmp=tmp->next;
-
-
 
     }
     AlarmList->first=modif;
@@ -129,21 +126,14 @@ List *searchAlarmID(List *AlarmList, int ID, int numberOfAlarm)
         if(tmp->alarm_id == ID)
         {
             AlarmList=deleteAlarm(AlarmList,ID);
-
         }
         else
         {
             numberOfAlarm++;
         }
         tmp=tmp->next;
-
-
     }
-
     return AlarmList;
-
-
-
 }
 
 
@@ -173,8 +163,6 @@ void delay(unsigned int mseconds)
 
 void displayMagic()
 {
-
-
     pid_t pid=fork();
     if (pid==0)
     { /* child process */
@@ -187,7 +175,5 @@ void displayMagic()
 
 void closeMagic()
 {
-
     system("cd ~/MagicMirror/ && pm2 stop all");
-
 }

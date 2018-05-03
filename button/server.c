@@ -21,3 +21,24 @@ void getAlarmServer(int ID, char *alarmFile)
     system(alarmServer);
 
 }
+
+
+void getMusicFilesServer(int ID, char *alarmFile)
+{
+    char alarmServer[80];
+    printf("ok");
+    sprintf(alarmServer,"curl -o %s -X GET \"http://localhost:8000/api/alarm/%d/\"",alarmFile,ID);
+    printf("%s\n",alarmServer);
+    system(alarmServer);
+
+}
+
+void getVideoFilesServer(int ID, char *alarmFile)
+{
+    char alarmServer[80];
+    printf("ok");
+    sprintf(alarmServer,"curl -o %s -X GET \"http://localhost:8000/api/alarm/%d/\"",alarmFile,ID);
+    printf("%s\n",alarmServer);
+    system(alarmServer);
+
+}

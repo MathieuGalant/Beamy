@@ -51,10 +51,6 @@
 		</Unit>
 		<Unit filename="command.h" />
 		<Unit filename="definition.h" />
-		<Unit filename="json.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="json.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
