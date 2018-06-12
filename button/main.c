@@ -34,6 +34,9 @@ int main(int argc, char **argv)
     char *commandVideoFile="XML/commandVideo.xml";
     char *commandMagicFile="XML/magic.xml";
     char *alarmFile="XML/alarm.xml";
+    char *musicFile="XML/music.xml";
+    char *videoFile="XML/video.xml";
+    char *tokenFile="XML/token.xml";
     char *musicNames[20]={"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
     char *addAlarm[2]={"0","0"};
     char *command[3]={"0","0","0"};
@@ -47,7 +50,7 @@ int main(int argc, char **argv)
     char alarmPlaying[50];
     char videoName[50];
     int continuer=1;
-
+    char token[50];
 
     int numberOfAlarm=0;
     Alarm *anAlarm;
@@ -55,13 +58,9 @@ int main(int argc, char **argv)
     Alarm *searchAlarm=NULL;
     struct tm * timeinfo;
 
-
-
     clock_t time_1;
     clock_t time_2;
     time_1=clock();
-
-
 
     FMOD_SYSTEM *syst;
     FMOD_CHANNEL *channel = 0;
@@ -87,7 +86,8 @@ int main(int argc, char **argv)
     FMOD_SOUND *music;
 
 
-
+    getTokenServer(tokenFile);
+    readTokenXmlFile(tokenFile,token);
 
 
     int action=0;
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 
         if((float)(time_2-time_1)/CLOCKS_PER_SEC>60) // get xml alarm from the server every minute
         {
-            getAlarmServer(1,alarmFile);
+            getAlarmServer(1,alarmFile,token);
             time_1=clock();
             printf("ok\n");
         }
@@ -318,7 +318,6 @@ int main(int argc, char **argv)
                     }
             }
         }
-
         if(playingVideo==1) // check if a video is playing
         {
             readXmlFile(commandVideoFile,commandVideo);
@@ -394,12 +393,10 @@ int main(int argc, char **argv)
         }
     }
     FMOD_Sound_Release(music);
-    FMOD_System_Close(system);
-    FMOD_System_Release(system);
+    FMOD_System_Close(syst);
+    FMOD_System_Release(syst);
     return EXIT_SUCCESS;
 }
-
-
 
 
 
@@ -416,7 +413,6 @@ void getFolderFiles(char *folderName, char *musicName[20])
             // printf ("%s\n", ent->d_name);
             musicName[i]=ent->d_name;
             i++;
-
             }
         closedir (dir);
     }
@@ -424,9 +420,7 @@ void getFolderFiles(char *folderName, char *musicName[20])
     {
   /* could not open directory */
         perror ("");
-
     }
-
 }
 
 
@@ -442,6 +436,5 @@ int getPositionMusic(char name[],char *musicName[20])
             return i;
     }
     printf("Coulnd't find the music");
-
 }
 

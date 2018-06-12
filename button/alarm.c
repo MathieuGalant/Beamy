@@ -110,11 +110,10 @@ List *deleteAlarm(List *AlarmList, int ID)
             modif->next=tmp;
         }
         tmp=tmp->next;
-
     }
     AlarmList->first=modif;
-    return AlarmList;
 
+    return AlarmList;
 }
 
 List *searchAlarmID(List *AlarmList, int ID, int numberOfAlarm)

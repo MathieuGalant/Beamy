@@ -65,7 +65,35 @@ char changeBool(char aBool[20])
     return action;
 }
 
+int is_leaf(xmlNode * node)
+{
+    xmlNode * child = node->children;
+    while(child)
+    {
+        if(child->type == XML_ELEMENT_NODE) return 0;
+        child = child->next;
+    }
+    return 1;
+}
 
+
+void getXml(xmlNode * node,int i,  char *attribut[])
+{
+    while(node)
+    {
+        if(node->type == XML_ELEMENT_NODE)
+        {
+      //    printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
+            if (is_leaf(node))
+            {
+                attribut[i]=xmlNodeGetContent(node);
+                i++;
+            }
+        }
+        getXml(node->children,i, attribut);
+        node = node->next;
+    }
+}
 
 void readXmlFile(char *filename,  char * attribut[])
 {
@@ -92,34 +120,8 @@ void readXmlFile(char *filename,  char * attribut[])
 }
 
 
-void getXml(xmlNode * node,int i,  char *attribut[])
-{
-    while(node)
-    {
-        if(node->type == XML_ELEMENT_NODE)
-        {
-      //    printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
-            if (is_leaf(node))
-            {
-                attribut[i]=xmlNodeGetContent(node);
-                i++;
-            }
-        }
-        getXml(node->children,i, attribut);
-        node = node->next;
-    }
-}
 
-int is_leaf(xmlNode * node)
-{
-    xmlNode * child = node->children;
-    while(child)
-    {
-        if(child->type == XML_ELEMENT_NODE) return 0;
-        child = child->next;
-    }
-    return 1;
-}
+
 
 
 
@@ -135,32 +137,6 @@ void modifyXml(char * filename)
     xmlNodeSetContent(node, (xmlChar*)"0");
     xmlSaveFileEnc(filename, doc, "UTF-8");
 }
-
-
-
-
-void readAlarmXmlFile(char *filename, Alarm *anAlarm)
-{
-    xmlDoc *doc = NULL;
-    xmlNode *root_element = NULL;
-
-    doc = xmlReadFile(filename, NULL, 0);
-
-    if (doc == NULL)
-    {
-        printf("Could not parse the XML file");
-    }
-
-    root_element = xmlDocGetRootElement(doc);
-
-    getAlarmXml(root_element,anAlarm);
-
-    xmlFreeDoc(doc);
-
-    xmlCleanupParser();
-
-}
-
 
 void getAlarmXml(xmlNode * node, Alarm *anAlarm)
 {
@@ -241,5 +217,98 @@ void getAlarmXml(xmlNode * node, Alarm *anAlarm)
         }
 
     }
+
+}
+
+
+
+
+void readAlarmXmlFile(char *filename, Alarm *anAlarm)
+{
+    xmlDoc *doc = NULL;
+    xmlNode *root_element = NULL;
+
+    doc = xmlReadFile(filename, NULL, 0);
+
+    if (doc == NULL)
+    {
+        printf("Could not parse the XML file");
+    }
+
+    root_element = xmlDocGetRootElement(doc);
+
+    getAlarmXml(root_element,anAlarm);
+
+    xmlFreeDoc(doc);
+
+    xmlCleanupParser();
+
+}
+
+
+
+
+char *getTokenXml(xmlNode * node, char *token)
+{
+
+    char ret[50];
+    int i=1;
+
+    while(node)
+    {
+        if(node->type == XML_ELEMENT_NODE)
+        {
+           // printf("%c%s:%s\n", '-', node->name, is_leaf(node)?xmlNodeGetContent(node):xmlGetProp(node, "id"));
+
+            if (is_leaf(node))
+            {
+                printf("%d:",i);
+                printf("%s\n",xmlNodeGetContent(node));
+
+                if(i==5)
+                {
+                    strcpy(token,xmlNodeGetContent(node));
+                    return token;
+                }
+                else
+                {
+                    i++;
+                }
+                node = node->next;
+            }
+            else
+            {
+                node=node->children;
+            }
+
+        node = node->next;
+        }
+
+    }
+
+}
+
+char *readTokenXmlFile(char *filename,char *token)
+{
+
+    xmlDoc *doc = NULL;
+    xmlNode *root_element = NULL;
+
+    doc = xmlReadFile(filename, NULL, 0);
+
+    if (doc == NULL)
+    {
+        printf("Could not parse the XML file");
+    }
+
+    root_element = xmlDocGetRootElement(doc);
+
+    getTokenXml(root_element,token);
+
+    xmlFreeDoc(doc);
+
+    xmlCleanupParser();
+
+    return token;
 
 }
